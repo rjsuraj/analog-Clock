@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clock</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sAngle: 0deg;
+            --mAngle: 0deg;
+            --hAngle: 0deg;
+        }
+
+        .wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* background-color: #85FFBD;
+            background-image: linear-gradient(45deg, #85FFBD 0%, #FFFB7D 100%); */
+
+
+            background: #8e9eab;
+            /* fallback for old browsers */
+            background: -webkit-linear-gradient(to right, #eef2f3, #8e9eab);
+            /* Chrome 10-25, Safari 5.1-6 */
+            background: linear-gradient(to right, #eef2f3, #8e9eab);
+            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+        }
+
+        .clock {
+            background: url('/images/clock1.png');
+            background-position: center;
+            background-size: cover;
+            width: 420px;
+            height: 420px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dot {
+            width: 31px;
+            height: 31px;
+            background-color: black;
+            border: 10px solid rgba(128, 128, 128, 0.339);
+            border-radius: 50%;
+            position: absolute;
+            z-index: 1;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .second-hand {
+            width: 4px;
+            height: 130px;
+            background-color: grey;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%) rotate(var(--sAngle));
+            transform-origin: bottom center;
+        }
+
+        .minute-hand {
+            width: 5px;
+            height: 110px;
+            background-color: black;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%) rotate(var(--mAngle));
+            transform-origin: 50% 100%;
+        }
+
+        .hour-hand {
+            width: 10px;
+            height: 90px;
+            background-color: black;
+            border-radius: 5px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%) rotate(var(--hAngle));
+            transform-origin: bottom center;
+        }
+        .signature{
+            position: absolute;
+            top: 30px;
+            left: 60%;
+            transform: translate(-80%);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="clock">
+            <div class="dot"></div>
+            <div class="second-hand"></div>
+            <div class="minute-hand"></div>
+            <div class="hour-hand"></div>
+        </div>
+        <div class="signature">
+            <img src="./images/animate.gif" alt="">
+        </div>
+    </div>
+
+
+    <script>
+        const sec = document.querySelector(".second-hand");
+        const min = document.querySelector(".minute-hand");
+        const hour = document.querySelector(".hour-hand");
+
+
+        setInterval(() => {
+            let curr_time = new Date();
+            let s = curr_time.getSeconds();
+            let m = curr_time.getMinutes();
+            let h = curr_time.getHours();
+
+            // formatting the hour in 12 hr system
+            h = h > 12 ? h - 12 : h;
+
+            sec.style.setProperty('--sAngle', `${s*6}deg`);
+            min.style.setProperty('--mAngle', `${m*6}deg`);
+            hour.style.setProperty('--hAngle', `${(h*30) + (Math.floor((m/12))*6)}deg`);
+        }, 1000)
+    </script>
+</body>
+
+</html>
